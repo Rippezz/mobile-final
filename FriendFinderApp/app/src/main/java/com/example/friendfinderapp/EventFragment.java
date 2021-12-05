@@ -51,6 +51,8 @@ public class EventFragment extends Fragment implements EventAdapter.OnEventListe
         intent.putExtra("event_name", events.get(position).getEvent_name());
         intent.putExtra("event_date", events.get(position).getEvent_date());
         intent.putExtra("event_image", events.get(position).getEvent_image());
+        intent.putExtra("event_id", events.get(position).getId());
+//        System.out.println(events.get(position).getId());
         startActivity(intent);
     }
 

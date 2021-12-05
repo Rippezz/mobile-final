@@ -2,7 +2,6 @@ package com.example.friendfinderapp.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -25,6 +24,7 @@ public class SignIn extends AppCompatActivity {
     private EditText etEmail, etPassword;
     String email, password;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +39,8 @@ public class SignIn extends AppCompatActivity {
             password = etPassword.getText().toString();
             if (email.trim().length() == 0) {
                 etEmail.setError("field tidak boleh kosong");
-            } else if (email.trim().length() == 0) {
-                etEmail.setError("field tidak boleh kosong");
+            } else if (password.trim().length() == 0) {
+                etPassword.setError("field tidak boleh kosong");
             } else {
                 login(email, password);
             }
@@ -59,39 +59,53 @@ public class SignIn extends AppCompatActivity {
         Signin.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                String pesan = response.body().getPesan();
+                String status = response.body().getStatus();
 
-                // get data user by email
-                Call<ResponseModel> userData = apiData.ardGetDataUserByEmail(email);
-                userData.enqueue(new Callback<ResponseModel>() {
-                    @Override
-                    public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-                        String pesan = response.body().getPesan();
-                        String fullname = response.body().getFullname();
-                        Toast.makeText(getApplicationContext(), "Login Berhasil!", Toast.LENGTH_SHORT).show();
-                        HomeFragment.username = fullname;
-                        Intent intent = new Intent(getApplicationContext(), Home.class);
-                        etEmail.setText("");
-                        etPassword.setText("");
-                        startActivity(intent);
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseModel> call, Throwable t) {
-
-                    }
-                });
-
-
-//                Toast.makeText(SignIn.this, pesan, Toast.LENGTH_SHORT).show();
-
+                if (status.equals("1")) {
+                    Toast.makeText(getApplicationContext(), "" + pesan, Toast.LENGTH_SHORT).show();
+                    getByEmail();
+                }else {
+                    Toast.makeText(getApplicationContext(), "Login Gagal ", Toast.LENGTH_SHORT).show();
+                }
+                finish();
             }
 
             @Override
             public void onFailure(Call<ResponseModel> call, Throwable t) {
-                Toast.makeText(SignIn.this, "Gagal Login " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignIn.this, "Error : " +t ,Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
+    }
 
+    public void reset() {
+        email = "";
+        password = "";
+        etEmail.setText("");
+        etPassword.setText("");
+    }
 
+    // get data user by email
+    public void getByEmail() {
+        APIRequestData apiData = RetroServer.konekRetro().create(APIRequestData.class);
+        Call<ResponseModel> userData = apiData.ardGetDataUserByEmail(email);
+        userData.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                String fullname = response.body().getFullname();
+                HomeFragment.username = fullname;
+                Intent intent = new Intent(getApplicationContext(), Home.class);
+                startActivity(intent);
+                reset();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                reset();
+                Toast.makeText(SignIn.this, "Eror : "+t,  Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
     }
 }

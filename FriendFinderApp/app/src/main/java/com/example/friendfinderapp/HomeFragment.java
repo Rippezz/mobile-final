@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment implements EventAdapter.OnEventListen
 
     // url for get all event data
 
-    public static String username;
+    public static String username = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,6 +38,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     public void onBindViewHolder(@NonNull EventAdapter.EventViewHolder holder, int position) {
         holder.txt_event_name.setText(events.get(position).getEvent_name());
         holder.txt_event_date.setText(events.get(position).getEvent_date());
+        holder.event_id.setText(String.valueOf(events.get(position).getId()));
 
         Glide.with(holder.itemView).load(ConfigurationAll.ImageURL + events.get(position).getEvent_image()).into(holder.img_event_image);
     }
@@ -47,7 +49,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     }
 
     public static class EventViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView txt_event_name, txt_event_date;
+        private TextView txt_event_name, txt_event_date, event_id;
         private ImageView img_event_image;
         OnEventListener onEventListener;
         public EventViewHolder(@NonNull View itemView, OnEventListener onEventListener) {
@@ -56,6 +58,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
             txt_event_name = itemView.findViewById(R.id.txt_event_name);
             txt_event_date = itemView.findViewById(R.id.txt_event_date);
             img_event_image = itemView.findViewById(R.id.img_event_image);
+            event_id = itemView.findViewById(R.id.event_id);
+
             this.onEventListener = onEventListener;
 
             itemView.setOnClickListener(this);
