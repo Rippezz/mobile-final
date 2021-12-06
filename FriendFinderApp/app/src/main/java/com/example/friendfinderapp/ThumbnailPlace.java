@@ -1,54 +1,108 @@
 package com.example.friendfinderapp;
 
 public class ThumbnailPlace {
-    private String thumbnail_place_name, thumbnail_place_road, thumbnail_place_image;
-    private int id, thumbnail_place_price;
+    private String id, place_name, place_owner, price, location, description,
+    place_picture, place_open_time, place_close_time, contact_person, category;
 
-    public ThumbnailPlace(String thumbnail_place_name, String thumbnail_place_road, String thumbnail_place_image, int id, int thumbnail_place_price) {
-        this.thumbnail_place_name = thumbnail_place_name;
-        this.thumbnail_place_road = thumbnail_place_road;
-        this.thumbnail_place_image = thumbnail_place_image;
+    public ThumbnailPlace(String id, String place_name, String place_owner, String price, String location, String description, String place_picture, String place_open_time, String place_close_time, String contact_person, String category) {
         this.id = id;
-        this.thumbnail_place_price = thumbnail_place_price;
+        this.place_name = place_name;
+        this.place_owner = place_owner;
+        this.price = price;
+        this.location = location;
+        this.description = description;
+        this.place_picture = place_picture;
+        this.place_open_time = place_open_time;
+        this.place_close_time = place_close_time;
+        this.contact_person = contact_person;
+        this.category = category;
     }
 
-    public String getThumbnail_place_name() {
-        return thumbnail_place_name;
-    }
-
-    public void setThumbnail_place_name(String thumbnail_place_name) {
-        this.thumbnail_place_name = thumbnail_place_name;
-    }
-
-    public String getThumbnail_place_road() {
-        return thumbnail_place_road;
-    }
-
-    public void setThumbnail_place_road(String thumbnail_place_road) {
-        this.thumbnail_place_road = thumbnail_place_road;
-    }
-
-    public String getThumbnail_place_image() {
-        return thumbnail_place_image;
-    }
-
-    public void setThumbnail_place_image(String thumbnail_place_image) {
-        this.thumbnail_place_image = thumbnail_place_image;
-    }
-
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getThumbnail_place_price() {
-        return thumbnail_place_price;
+    public String getPlace_name() {
+        return place_name;
     }
 
-    public void setThumbnail_place_price(int thumbnail_place_price) {
-        this.thumbnail_place_price = thumbnail_place_price;
+    public void setPlace_name(String place_name) {
+        this.place_name = place_name;
+    }
+
+    public String getPlace_owner() {
+        return place_owner;
+    }
+
+    public void setPlace_owner(String place_owner) {
+        this.place_owner = place_owner;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPlace_picture() {
+        return place_picture;
+    }
+
+    public void setPlace_picture(String place_picture) {
+        this.place_picture = place_picture;
+    }
+
+    public String getPlace_open_time() {
+        return place_open_time;
+    }
+
+    public void setPlace_open_time(String place_open_time) {
+        this.place_open_time = place_open_time;
+    }
+
+    public String getPlace_close_time() {
+        return place_close_time;
+    }
+
+    public void setPlace_close_time(String place_close_time) {
+        this.place_close_time = place_close_time;
+    }
+
+    public String getContact_person() {
+        return contact_person;
+    }
+
+    public void setContact_person(String contact_person) {
+        this.contact_person = contact_person;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.friendfinderapp.Constants.ConfigurationAll;
@@ -32,10 +33,11 @@ import java.util.List;
  * Use the  factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment implements EventAdapter.OnEventListener {
+public class HomeFragment extends Fragment implements EventAdapter.OnEventListener, ThumbnailEventAdapter.OnEventListener, ThumbnailPlaceAdapter.OnEventListener {
 
+    RequestQueue requestQueue;
     private List<ThumbnailEvent> thumbnailEvents = new ArrayList<>();
-//    private ArrayList<Category> categories;
+    //    private ArrayList<Category> categories;
     private List<Event> events = new ArrayList<>();
     private List<ThumbnailPlace> thumbnailPlaces = new ArrayList<>();
 
@@ -108,7 +110,7 @@ public class HomeFragment extends Fragment implements EventAdapter.OnEventListen
                     ThumbnailEvent thumbnailEvent = new ThumbnailEvent(name_event, event_start_date, category, event_picture, id);
                     thumbnailEvents.add(thumbnailEvent);
                 }
-                ThumbnailEventAdapter thumbnailEventAdapter = new ThumbnailEventAdapter(thumbnailEvents);
+                ThumbnailEventAdapter thumbnailEventAdapter = new ThumbnailEventAdapter(thumbnailEvents, HomeFragment.this);
                 recyclerViewThumbnailEvent.setAdapter(thumbnailEventAdapter);
 
             } catch (JSONException e) {
@@ -136,12 +138,19 @@ public class HomeFragment extends Fragment implements EventAdapter.OnEventListen
                 JSONArray eventArray = new JSONArray(response);
                 for (int i = 0; i < eventArray.length(); i++) {
                     JSONObject eventsJSONObject = eventArray.getJSONObject(i);
-                    int id = eventsJSONObject.getInt("id");
+                    String id = eventsJSONObject.getString("id");
                     String name_event = eventsJSONObject.getString("name_event");
-                    String event_start_date = eventsJSONObject.getString("event_start_date");
+                    String event_owner = eventsJSONObject.getString("event_owner");
+                    String contact_person = eventsJSONObject.getString("contact_person");
+                    String description = eventsJSONObject.getString("description");
                     String event_picture = eventsJSONObject.getString("event_picture");
+                    String event_start_date = eventsJSONObject.getString("event_start_date");
+                    String event_end_date = eventsJSONObject.getString("event_end_date");
+                    String price = eventsJSONObject.getString("price");
+                    String location = eventsJSONObject.getString("location");
+                    String category = eventsJSONObject.getString("category");
 
-                    Event event = new Event(name_event, event_picture, event_start_date, id);
+                    Event event = new Event(id, name_event, event_owner, contact_person, description, event_picture, event_start_date, event_end_date,price, location, category);
                     events.add(event);
                 }
                 EventAdapter eventAdapter = new EventAdapter(events, HomeFragment.this);
@@ -163,16 +172,24 @@ public class HomeFragment extends Fragment implements EventAdapter.OnEventListen
                 JSONArray thumbnailPlaceArray = new JSONArray(response);
                 for (int i = 0; i < thumbnailPlaceArray.length(); i++) {
                     JSONObject thumbnailPlaceObject = thumbnailPlaceArray.getJSONObject(i);
-                    int id = thumbnailPlaceObject.getInt("id");
-                    String location = thumbnailPlaceObject.getString("location");
+                    String id = thumbnailPlaceObject.getString("id");
                     String place_name = thumbnailPlaceObject.getString("place_name");
+                    String place_owner = thumbnailPlaceObject.getString("place_owner");
+                    String price = thumbnailPlaceObject.getString("price");
+                    String location = thumbnailPlaceObject.getString("location");
+                    String description = thumbnailPlaceObject.getString("description");
                     String place_picture = thumbnailPlaceObject.getString("place_picture");
-                    int price = thumbnailPlaceObject.getInt("price");
+                    String place_open_time = thumbnailPlaceObject.getString("place_open_time");
+                    String place_close_time = thumbnailPlaceObject.getString("place_close_time");
+                    String contact_person = thumbnailPlaceObject.getString("contact_person");
+                    String category = thumbnailPlaceObject.getString("category");
 
-                    ThumbnailPlace thumbnailPlace = new ThumbnailPlace(place_name, location, place_picture, id, price);
+                    ThumbnailPlace thumbnailPlace = new ThumbnailPlace(id, place_name, place_owner, price,
+                            location, description, place_picture, place_open_time, place_close_time,
+                            contact_person, category);
                     thumbnailPlaces.add(thumbnailPlace);
                 }
-                ThumbnailPlaceAdapter thumbnailPlaceAdapter = new ThumbnailPlaceAdapter(thumbnailPlaces);
+                ThumbnailPlaceAdapter thumbnailPlaceAdapter = new ThumbnailPlaceAdapter(thumbnailPlaces, HomeFragment.this);
                 recyclerViewThumbnailPlace.setAdapter(thumbnailPlaceAdapter);
 
             } catch (JSONException e) {
@@ -188,9 +205,44 @@ public class HomeFragment extends Fragment implements EventAdapter.OnEventListen
     @Override
     public void onEventClick(int position) {
         Intent intent = new Intent(this.getContext(), DetailEvent.class);
-        intent.putExtra("event_name", events.get(position).getEvent_name());
-        intent.putExtra("event_date", events.get(position).getEvent_date());
-        intent.putExtra("event_image", events.get(position).getEvent_image());
+        // 11 item
+        intent.putExtra("event_name", events.get(position).getName_event());
+        intent.putExtra("event_picture", events.get(position).getEvent_picture());
+        intent.putExtra("start_date", events.get(position).getEvent_start_date());
+        intent.putExtra("event_owner", events.get(position).getEvent_owner());
+        intent.putExtra("contact_person", events.get(position).getContact_person());
+        intent.putExtra("description", events.get(position).getDescription());
+
+        startActivity(intent);
+    }
+    // event click
+    @Override
+    public void onThumbnailEventClick(int position) {
+        Intent intent = new Intent(this.getContext(), DetailEvent.class);
+        // 11 item
+        intent.putExtra("event_name", events.get(position).getName_event());
+        intent.putExtra("event_picture", events.get(position).getEvent_picture());
+        intent.putExtra("start_date", events.get(position).getEvent_start_date());
+        intent.putExtra("event_owner", events.get(position).getEvent_owner());
+        intent.putExtra("contact_person", events.get(position).getContact_person());
+        intent.putExtra("description", events.get(position).getDescription());
+
+        startActivity(intent);
+    }
+
+    @Override
+    public void onThumbnailPlaceClick(int position) {
+        Intent intent = new Intent(this.getContext(), DetailPlace.class);
+
+        intent.putExtra("place_name", thumbnailPlaces.get(position).getPlace_name());
+        intent.putExtra("place_picture", thumbnailPlaces.get(position).getPlace_picture());
+        intent.putExtra("description", thumbnailPlaces.get(position).getDescription());
+        intent.putExtra("place_owner", thumbnailPlaces.get(position).getPlace_owner());
+        intent.putExtra("place_price", thumbnailPlaces.get(position).getPrice());
+        intent.putExtra("place_time_schedule", thumbnailPlaces.get(position).getPlace_open_time());
+        intent.putExtra("location", thumbnailPlaces.get(position).getLocation());
+        intent.putExtra("contact_person", thumbnailPlaces.get(position).getContact_person());
+
         startActivity(intent);
     }
 }

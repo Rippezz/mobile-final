@@ -47,12 +47,15 @@ public class EventFragment extends Fragment implements EventAdapter.OnEventListe
 
     @Override
     public void onEventClick(int position) {
-        Intent intent = new Intent(this.getContext(), Event_DetailEvent.class);
-        intent.putExtra("event_name", events.get(position).getEvent_name());
-        intent.putExtra("event_date", events.get(position).getEvent_date());
-        intent.putExtra("event_image", events.get(position).getEvent_image());
-        intent.putExtra("event_id", events.get(position).getId());
-//        System.out.println(events.get(position).getId());
+        Intent intent = new Intent(this.getContext(), DetailEvent.class);
+        // 11 item
+        intent.putExtra("event_name", events.get(position).getName_event());
+        intent.putExtra("event_picture", events.get(position).getEvent_picture());
+        intent.putExtra("start_date", events.get(position).getEvent_start_date());
+        intent.putExtra("event_owner", events.get(position).getEvent_owner());
+        intent.putExtra("contact_person", events.get(position).getContact_person());
+        intent.putExtra("description", events.get(position).getDescription());
+
         startActivity(intent);
     }
 
@@ -64,12 +67,19 @@ public class EventFragment extends Fragment implements EventAdapter.OnEventListe
                     JSONArray eventArray = new JSONArray(response);
                     for (int i = 0; i < eventArray.length(); i++) {
                         JSONObject eventsJSONObject = eventArray.getJSONObject(i);
-                        int id = eventsJSONObject.getInt("id");
+                        String id = eventsJSONObject.getString("id");
                         String name_event = eventsJSONObject.getString("name_event");
-                        String event_start_date = eventsJSONObject.getString("event_start_date");
+                        String event_owner = eventsJSONObject.getString("event_owner");
+                        String contact_person = eventsJSONObject.getString("contact_person");
+                        String description = eventsJSONObject.getString("description");
                         String event_picture = eventsJSONObject.getString("event_picture");
+                        String event_start_date = eventsJSONObject.getString("event_start_date");
+                        String event_end_date = eventsJSONObject.getString("event_end_date");
+                        String price = eventsJSONObject.getString("price");
+                        String location = eventsJSONObject.getString("location");
+                        String category = eventsJSONObject.getString("category");
 
-                        Event event = new Event(name_event, event_picture, event_start_date, id);
+                        Event event = new Event(id, name_event, event_owner, contact_person, description, event_picture, event_start_date, event_end_date, price, location, category);
                         events.add(event);
                     }
                     EventAdapter eventAdapter = new EventAdapter(events, EventFragment.this);

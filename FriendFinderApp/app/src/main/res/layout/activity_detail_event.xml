@@ -120,7 +120,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/poppinssemibold"
-            android:text="Contact Person"
+            android:text="Description"
             android:textColor="@color/darkGrey"
             android:textSize="14dp" />
 

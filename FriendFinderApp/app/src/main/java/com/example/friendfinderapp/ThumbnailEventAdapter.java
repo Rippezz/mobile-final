@@ -16,9 +16,11 @@ import java.util.List;
 
 public class ThumbnailEventAdapter extends RecyclerView.Adapter<ThumbnailEventAdapter.ThumbnailEventViewHolder> {
     private List<ThumbnailEvent> thumbnailEvents;
+    OnEventListener onEventListener;
 
-    public ThumbnailEventAdapter(List<ThumbnailEvent> thumbnailEvents) {
+    public ThumbnailEventAdapter(List<ThumbnailEvent> thumbnailEvents, OnEventListener onEventListener) {
         this.thumbnailEvents = thumbnailEvents;
+        this.onEventListener = onEventListener;
     }
 
     @NonNull
@@ -26,7 +28,7 @@ public class ThumbnailEventAdapter extends RecyclerView.Adapter<ThumbnailEventAd
     public ThumbnailEventAdapter.ThumbnailEventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.event_thumbnail_item, parent, false);
-        return new ThumbnailEventViewHolder(view);
+        return new ThumbnailEventViewHolder(view, onEventListener);
     }
 
     @Override
@@ -43,17 +45,32 @@ public class ThumbnailEventAdapter extends RecyclerView.Adapter<ThumbnailEventAd
         return (thumbnailEvents != null) ? thumbnailEvents.size() : 0;
     }
 
-    public static class ThumbnailEventViewHolder extends RecyclerView.ViewHolder {
+    public static class ThumbnailEventViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView txt_thumbnail_event_name, txt_thumbnail_event_date, txt_category;
         private ImageView img_thumbnail_image;
 
-        public ThumbnailEventViewHolder(@NonNull View itemView) {
+        OnEventListener onEventListener;
+
+        public ThumbnailEventViewHolder(@NonNull View itemView, OnEventListener onEventListener) {
             super(itemView);
 
             txt_thumbnail_event_name = itemView.findViewById(R.id.txt_thumbnail_event_name);
             txt_thumbnail_event_date = itemView.findViewById(R.id.txt_thumbnail_event_date);
             txt_category = itemView.findViewById(R.id.txt_category);
             img_thumbnail_image = itemView.findViewById(R.id.img_thumbnail_image);
+
+            this.onEventListener = onEventListener;
+
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            onEventListener.onThumbnailEventClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnEventListener {
+        void onThumbnailEventClick(int position);
     }
 }

@@ -4,7 +4,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.friendfinderapp.Constants.ConfigurationAll;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHolder> {
@@ -36,11 +34,11 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
 
     @Override
     public void onBindViewHolder(@NonNull EventAdapter.EventViewHolder holder, int position) {
-        holder.txt_event_name.setText(events.get(position).getEvent_name());
-        holder.txt_event_date.setText(events.get(position).getEvent_date());
+        holder.txt_event_name.setText(events.get(position).getName_event());
+        holder.txt_event_date.setText(events.get(position).getEvent_start_date());
         holder.event_id.setText(String.valueOf(events.get(position).getId()));
 
-        Glide.with(holder.itemView).load(ConfigurationAll.ImageURL + events.get(position).getEvent_image()).into(holder.img_event_image);
+        Glide.with(holder.itemView).load(ConfigurationAll.ImageURL + events.get(position).getEvent_picture()).into(holder.img_event_image);
     }
 
     @Override
@@ -51,6 +49,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     public static class EventViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView txt_event_name, txt_event_date, event_id;
         private ImageView img_event_image;
+
         OnEventListener onEventListener;
         public EventViewHolder(@NonNull View itemView, OnEventListener onEventListener) {
             super(itemView);

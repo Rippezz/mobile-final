@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ResponseModel {
     public List<User_Model> dataUser;
-    public  String pesan, fullname , status;
+    public String pesan, fullname, status;
 
     public String getFullname() {
         return fullname;
@@ -33,6 +33,7 @@ public class ResponseModel {
     public List<User_Model> getDataUser() {
         return dataUser;
     }
+
     public void setDataUser(List<User_Model> dataUser) {
         this.dataUser = dataUser;
     }

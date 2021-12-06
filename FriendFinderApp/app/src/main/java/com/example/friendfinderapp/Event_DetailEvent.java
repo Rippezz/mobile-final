@@ -24,14 +24,14 @@ public class Event_DetailEvent extends AppCompatActivity {
         TextView detail_event_date = findViewById(R.id.detail_event_date);
 
         // get parsing data
-        if (getIntent() != null) {
-            String event_name = getIntent().getStringExtra("event_name").toString();
-            int event_image = getIntent().getIntExtra("event_image", 0);
-            String event_date = getIntent().getStringExtra("event_date").toString();
-            detail_event_name.setText(event_name);
-            detail_event_image.setImageResource(event_image);
-            detail_event_date.setText(event_date);
-        }
+//        if (getIntent() != null) {
+//                String event_name = getIntent().getStringExtra("event_name").toString();
+//                int event_image = getIntent().getIntExtra("event_image", 0);
+//                String event_date = getIntent().getStringExtra("event_date").toString();
+//                detail_event_name.setText(event_name);
+//                detail_event_image.setImageResource(event_image);
+//                detail_event_date.setText(event_date);
+//        }
         ;
 
         btn_back_to_events.setOnClickListener(new View.OnClickListener() {
