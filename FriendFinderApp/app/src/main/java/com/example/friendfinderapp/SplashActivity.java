@@ -2,25 +2,42 @@ package com.example.friendfinderapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
+import com.example.friendfinderapp.Activity.SignIn;
+
 public class SplashActivity extends AppCompatActivity {
+    SharedPreferences sharedPreferences;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
+
+        // session
+        sharedPreferences = getSharedPreferences("status", Context.MODE_PRIVATE);
+        if (sharedPreferences.contains("status")) {
+            startActivity(new Intent(this, SignIn.class));
+            finish();
+        }
+
         Button btn_splash = findViewById(R.id.btn_splash);
-        btn_splash.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), OnboardingFirst.class);
-                startActivity(intent);
-            }
+        btn_splash.setOnClickListener(v -> {
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("status", "in");
+            editor.commit();
+
+            Intent intent = new Intent(getApplicationContext(), OnboardingFirst.class);
+            startActivity(intent);
         });
     }
 
