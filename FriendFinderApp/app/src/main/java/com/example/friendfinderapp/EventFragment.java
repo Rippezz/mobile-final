@@ -11,26 +11,30 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.example.friendfinderapp.API.APIRequestData;
+import com.example.friendfinderapp.API.RetroServer;
 import com.example.friendfinderapp.Constants.ConfigurationAll;
+import com.example.friendfinderapp.Model.Event_Model;
+import com.example.friendfinderapp.Model.ResponseModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class EventFragment extends Fragment implements EventAdapter.OnEventListener {
 
     private List<Event> events = new ArrayList<>();
 
     // recycler view init
-    RecyclerView recyclerViewEvent;
+    private RecyclerView recyclerViewEvent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,7 +44,7 @@ public class EventFragment extends Fragment implements EventAdapter.OnEventListe
         // event class
         addEventItem();
         recyclerViewEvent = view.findViewById(R.id.recycle_view_event);
-        RecyclerView.LayoutManager layoutManagerEvent = new LinearLayoutManager(view.getContext());
+        RecyclerView.LayoutManager layoutManagerEvent = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerViewEvent.setLayoutManager(layoutManagerEvent);
         return view;
     }
@@ -60,43 +64,38 @@ public class EventFragment extends Fragment implements EventAdapter.OnEventListe
     }
 
     private void addEventItem() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, ConfigurationAll.EVENT_URL, new Response.Listener<String>() {
+        APIRequestData apiRequestData = RetroServer.konekRetro().create(APIRequestData.class);
+        Call<List<Event_Model>> call = apiRequestData.resAllUserEvent(ConfigurationAll.user_id);
+        call.enqueue(new Callback<List<Event_Model>>() {
             @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray eventArray = new JSONArray(response);
-                    for (int i = 0; i < eventArray.length(); i++) {
-                        JSONObject eventsJSONObject = eventArray.getJSONObject(i);
-                        String id = eventsJSONObject.getString("id");
-                        String name_event = eventsJSONObject.getString("name_event");
-                        String event_owner = eventsJSONObject.getString("event_owner");
-                        String contact_person = eventsJSONObject.getString("contact_person");
-                        String description = eventsJSONObject.getString("description");
-                        String event_picture = eventsJSONObject.getString("event_picture");
-                        String event_start_date = eventsJSONObject.getString("event_start_date");
-                        String event_end_date = eventsJSONObject.getString("event_end_date");
-                        String price = eventsJSONObject.getString("price");
-                        String location = eventsJSONObject.getString("location");
-                        String category = eventsJSONObject.getString("category");
+            public void onResponse(Call<List<Event_Model>> call, Response<List<Event_Model>> response) {
+                List<Event_Model> event_models = response.body();
+                for (Event_Model event_model : event_models) {
+                    String id = event_model.getId();
+                    String name_event = event_model.getName_event();
+                    String event_owner = event_model.getEvent_owner();
+                    String contact_person = event_model.getContact_person();
+                    String description = event_model.getDescription();
+                    String event_picture = event_model.getEvent_picture();
+                    String event_start_date = event_model.getEvent_start_date();
+                    String event_end_date = event_model.getEvent_end_date();
+                    String price = event_model.getPrice();
+                    String location = event_model.getLocation();
+                    String category = event_model.getCategory();
 
-                        Event event = new Event(id, name_event, event_owner, contact_person, description, event_picture, event_start_date, event_end_date, price, location, category);
-                        events.add(event);
-                    }
-                    EventAdapter eventAdapter = new EventAdapter(events, EventFragment.this);
-                    recyclerViewEvent.setAdapter(eventAdapter);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    Event event = new Event(id, name_event, event_owner, contact_person, description, event_picture, event_start_date, event_end_date, price, location, category);
+                    events.add(event);
                 }
 
+                EventAdapter eventAdapter = new EventAdapter(events, EventFragment.this);
+                recyclerViewEvent.setAdapter(eventAdapter);
             }
-        }, new Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<List<Event_Model>> call, Throwable t) {
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+
             }
         });
-
-        Volley.newRequestQueue(getContext()).add(stringRequest);
     }
 }

@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_homeFragment_to_homeSeeAllFragment2"
             app:destination="@id/homeSeeAllFragment2" />
+        <action
+            android:id="@+id/action_homeFragment_to_seeAllPlaceFragment"
+            app:destination="@id/seeAllPlaceFragment" />
     </fragment>
     <fragment
         android:id="@+id/eventFragment"
@@ -29,4 +32,9 @@
         android:name="com.example.friendfinderapp.HomeSeeAllFragment"
         android:label="fragment_home_see_all"
         tools:layout="@layout/fragment_home_see_all" />
+    <fragment
+        android:id="@+id/seeAllPlaceFragment"
+        android:name="com.example.friendfinderapp.seeAllPlaceFragment"
+        android:label="fragment_see_all_place"
+        tools:layout="@layout/fragment_see_all_place" />
 </navigation>

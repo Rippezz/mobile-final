@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -51,7 +54,6 @@ public class HomeSeeAllFragment extends Fragment implements EventAdapter.OnEvent
 
         // init
         NavController navController = Navigation.findNavController((Activity) view.getContext(), R.id.fragment);
-
         ImageView btn_back_to_home = view.findViewById(R.id.btn_back_to_home);
 
         // event
@@ -64,18 +66,38 @@ public class HomeSeeAllFragment extends Fragment implements EventAdapter.OnEvent
         });
 
         // categories
+        /*
         addCategoryItem();
         RecyclerView recyclerViewCategories = view.findViewById(R.id.recycle_view_category);
         CategoryAdapter categoryAdapter = new CategoryAdapter(categories);
         recyclerViewCategories.setAdapter(categoryAdapter);
         RecyclerView.LayoutManager layoutManagerCategories = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewCategories.setLayoutManager(layoutManagerCategories);
+        */
 
         // event class
         addEventItem();
         recyclerViewEvent = view.findViewById(R.id.recycle_view_event);
         RecyclerView.LayoutManager layoutManagerEvent = new LinearLayoutManager(view.getContext());
         recyclerViewEvent.setLayoutManager(layoutManagerEvent);
+
+        EditText txt_search_event = view.findViewById(R.id.txt_search_event);
+        txt_search_event.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         return view;
     }
@@ -91,7 +113,7 @@ public class HomeSeeAllFragment extends Fragment implements EventAdapter.OnEvent
     }
 
     // add event item
-        private void addEventItem() {
+    private void addEventItem() {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, ConfigurationAll.EVENT_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -99,20 +121,20 @@ public class HomeSeeAllFragment extends Fragment implements EventAdapter.OnEvent
                     JSONArray eventArray = new JSONArray(response);
                     for (int i = 0; i < eventArray.length(); i++) {
                         JSONObject eventsJSONObject = eventArray.getJSONObject(i);
-                    String id = eventsJSONObject.getString("id");
-                    String name_event = eventsJSONObject.getString("name_event");
-                    String event_owner = eventsJSONObject.getString("event_owner");
-                    String contact_person = eventsJSONObject.getString("contact_person");
-                    String description = eventsJSONObject.getString("description");
-                    String event_picture = eventsJSONObject.getString("event_picture");
-                    String event_start_date = eventsJSONObject.getString("event_start_date");
-                    String event_end_date = eventsJSONObject.getString("event_end_date");
-                    String price = eventsJSONObject.getString("price");
-                    String location = eventsJSONObject.getString("location");
-                    String category = eventsJSONObject.getString("category");
+                        String id = eventsJSONObject.getString("id");
+                        String name_event = eventsJSONObject.getString("name_event");
+                        String event_owner = eventsJSONObject.getString("event_owner");
+                        String contact_person = eventsJSONObject.getString("contact_person");
+                        String description = eventsJSONObject.getString("description");
+                        String event_picture = eventsJSONObject.getString("event_picture");
+                        String event_start_date = eventsJSONObject.getString("event_start_date");
+                        String event_end_date = eventsJSONObject.getString("event_end_date");
+                        String price = eventsJSONObject.getString("price");
+                        String location = eventsJSONObject.getString("location");
+                        String category = eventsJSONObject.getString("category");
 
-                    Event event = new Event(id, name_event, event_owner, contact_person, description, event_picture, event_start_date, event_end_date,price, location, category);
-                    events.add(event);
+                        Event event = new Event(id, name_event, event_owner, contact_person, description, event_picture, event_start_date, event_end_date, price, location, category);
+                        events.add(event);
                     }
                     EventAdapter eventAdapter = new EventAdapter(events, HomeSeeAllFragment.this);
                     recyclerViewEvent.setAdapter(eventAdapter);

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.friendfinderapp.Constants.ConfigurationAll;
 
 import org.json.JSONArray;
@@ -36,7 +38,7 @@ import java.util.List;
 public class HomeFragment extends Fragment implements EventAdapter.OnEventListener, ThumbnailEventAdapter.OnEventListener, ThumbnailPlaceAdapter.OnEventListener {
 
     RequestQueue requestQueue;
-    private List<ThumbnailEvent> thumbnailEvents = new ArrayList<>();
+    private final List<ThumbnailEvent> thumbnailEvents = new ArrayList<>();
     //    private ArrayList<Category> categories;
     private List<Event> events = new ArrayList<>();
     private List<ThumbnailPlace> thumbnailPlaces = new ArrayList<>();
@@ -46,7 +48,7 @@ public class HomeFragment extends Fragment implements EventAdapter.OnEventListen
 
     // url for get all event data
 
-    public static String username = "";
+    public static String username = "", profile = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,9 +58,22 @@ public class HomeFragment extends Fragment implements EventAdapter.OnEventListen
 
         // init
         TextView tvNama = view.findViewById(R.id.tvNama);
-        if (username.length() > 0) {
-            tvNama.setText(username);
+        ImageView iv_user_profile = view.findViewById(R.id.iv_user_profile);
+
+        // set data
+        tvNama.setText(username);
+        if (profile != null) {
+            Glide.with(view.getContext()).load(ConfigurationAll.ImageURL + profile).into(iv_user_profile);
+        } else {
+            iv_user_profile.setImageResource(R.mipmap.hero);
         }
+
+        TextView txt_see_all_place = view.findViewById(R.id.txt_see_all_place);
+        txt_see_all_place.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController((Activity) view.getContext(), R.id.fragment);
+            navController.navigate(R.id.seeAllPlaceFragment);
+        });
+
         TextView txt_link_seeAll_event = view.findViewById(R.id.txt_link_seeAll_event);
         txt_link_seeAll_event.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController((Activity) view.getContext(), R.id.fragment);
@@ -150,7 +165,7 @@ public class HomeFragment extends Fragment implements EventAdapter.OnEventListen
                     String location = eventsJSONObject.getString("location");
                     String category = eventsJSONObject.getString("category");
 
-                    Event event = new Event(id, name_event, event_owner, contact_person, description, event_picture, event_start_date, event_end_date,price, location, category);
+                    Event event = new Event(id, name_event, event_owner, contact_person, description, event_picture, event_start_date, event_end_date, price, location, category);
                     events.add(event);
                 }
                 EventAdapter eventAdapter = new EventAdapter(events, HomeFragment.this);
@@ -215,6 +230,7 @@ public class HomeFragment extends Fragment implements EventAdapter.OnEventListen
 
         startActivity(intent);
     }
+
     // event click
     @Override
     public void onThumbnailEventClick(int position) {

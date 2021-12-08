@@ -1,11 +1,16 @@
 package com.example.friendfinderapp.API;
 
+import com.example.friendfinderapp.Model.Event_Model;
 import com.example.friendfinderapp.Model.ResponseModel;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface APIRequestData {
 
@@ -32,11 +37,7 @@ public interface APIRequestData {
             @Field("password") String password
     );
 
-    @FormUrlEncoded
-    @POST("API/getDetailEvent")
-    Call<ResponseModel> resDetailEvent(
-            @Field("id") String id
-    );
-
-
+    @GET("API/getAllUserEvent/{id}")
+    Call<List<Event_Model>> resAllUserEvent(@Path("id") String id);
+    
 }

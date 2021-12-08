@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.friendfinderapp.API.APIRequestData;
 import com.example.friendfinderapp.API.RetroServer;
+import com.example.friendfinderapp.Constants.ConfigurationAll;
 import com.example.friendfinderapp.Home;
 import com.example.friendfinderapp.HomeFragment;
 import com.example.friendfinderapp.Model.ResponseModel;
@@ -94,7 +95,13 @@ public class SignIn extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 String fullname = response.body().getFullname();
+                String profile = response.body().getProfile();
+                String id = response.body().getId();
+
                 HomeFragment.username = fullname;
+                HomeFragment.profile = profile;
+                ConfigurationAll.user_id = id;
+
                 Intent intent = new Intent(getApplicationContext(), Home.class);
                 startActivity(intent);
                 reset();

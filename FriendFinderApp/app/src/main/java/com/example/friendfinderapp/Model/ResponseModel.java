@@ -4,10 +4,36 @@ import java.util.List;
 
 public class ResponseModel {
     public List<User_Model> dataUser;
-    public String pesan, fullname, status;
+    public List userEvent;
+
+    public List getUserEvent() {
+        return userEvent;
+    }
+
+    public void setUserEvent(List userEvent) {
+        this.userEvent = userEvent;
+    }
+
+    public String pesan, fullname, status, profile, id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getFullname() {
         return fullname;
+    }
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
     }
 
     public void setFullname(String fullname) {
