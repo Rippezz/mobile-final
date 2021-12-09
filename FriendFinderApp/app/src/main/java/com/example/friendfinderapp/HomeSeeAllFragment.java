@@ -2,10 +2,7 @@ package com.example.friendfinderapp;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -24,6 +22,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.friendfinderapp.API.APIRequestData;
+import com.example.friendfinderapp.API.RetroServer;
 import com.example.friendfinderapp.Constants.ConfigurationAll;
 
 import org.json.JSONArray;
@@ -33,6 +33,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the  factory method to
@@ -40,11 +43,10 @@ import java.util.List;
  */
 public class HomeSeeAllFragment extends Fragment implements EventAdapter.OnEventListener {
 
-    private ArrayList<Category> categories;
-    private List<Event> events = new ArrayList<>();
-
     // recycler view init
     RecyclerView recyclerViewEvent;
+    private ArrayList<Category> categories;
+    private final List<Event> events = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,24 +82,58 @@ public class HomeSeeAllFragment extends Fragment implements EventAdapter.OnEvent
         recyclerViewEvent = view.findViewById(R.id.recycle_view_event);
         RecyclerView.LayoutManager layoutManagerEvent = new LinearLayoutManager(view.getContext());
         recyclerViewEvent.setLayoutManager(layoutManagerEvent);
-
+        // keyword
         EditText txt_search_event = view.findViewById(R.id.txt_search_event);
-        txt_search_event.addTextChangedListener(new TextWatcher() {
+        // refresh data event
+        ImageView btn_refresh_event = view.findViewById(R.id.btn_refresh_event);
+        btn_refresh_event.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
+            public void onClick(View v) {
+                addEventItem();
+                txt_search_event.setText("");
             }
         });
+
+        CardView btn_search_event = view.findViewById(R.id.btn_search_event);
+        btn_search_event.setOnClickListener(v -> {
+            events.clear();
+            if (String.valueOf(txt_search_event.getText()).equals("")) {
+                addEventItem();
+            } else {
+                APIRequestData apiRequestData = RetroServer.konekRetro().create(APIRequestData.class);
+                Call<List<userEvent>> call = apiRequestData.resEventByKeyword(String.valueOf(txt_search_event.getText()));
+                call.enqueue(new Callback<List<userEvent>>() {
+                    @Override
+                    public void onResponse(Call<List<userEvent>> call, retrofit2.Response<List<userEvent>> response) {
+                        List<userEvent> userEvents = response.body();
+                        for (userEvent userEvent : userEvents) {
+                            String id = userEvent.getId();
+                            String name_event = userEvent.getName_event();
+                            String event_owner = userEvent.getEvent_owner();
+                            String contact_person = userEvent.getContact_person();
+                            String description = userEvent.getDescription();
+                            String event_picture = userEvent.getEvent_picture();
+                            String event_start_date = userEvent.getEvent_start_date();
+                            String event_end_date = userEvent.getEvent_end_date();
+                            String price = userEvent.getPrice();
+                            String location = userEvent.getLocation();
+                            String category = userEvent.getCategory();
+
+                            Event event = new Event(id, name_event, event_owner, contact_person, description, event_picture, event_start_date, event_end_date, price, location, category);
+                            events.add(event);
+                        }
+                        EventAdapter eventAdapter = new EventAdapter(events, HomeSeeAllFragment.this);
+                        recyclerViewEvent.setAdapter(eventAdapter);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<userEvent>> call, Throwable t) {
+                        Toast.makeText(getContext(), "Data Not found!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
 
         return view;
     }
@@ -114,6 +150,7 @@ public class HomeSeeAllFragment extends Fragment implements EventAdapter.OnEvent
 
     // add event item
     private void addEventItem() {
+        events.clear();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, ConfigurationAll.EVENT_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
