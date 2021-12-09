@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.friendfinderapp.API.APIRequestData;
 import com.example.friendfinderapp.API.RetroServer;
 import com.example.friendfinderapp.Constants.ConfigurationAll;
@@ -32,6 +35,7 @@ import retrofit2.Response;
 public class EventFragment extends Fragment implements EventAdapter.OnEventListener {
 
     private List<Event> events = new ArrayList<>();
+    public static String username = "", profile = "";
 
     // recycler view init
     private RecyclerView recyclerViewEvent;
@@ -41,11 +45,22 @@ public class EventFragment extends Fragment implements EventAdapter.OnEventListe
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_event, container, false);
+        // init
+        TextView txt_user_name = view.findViewById(R.id.txt_user_name);
+        ImageView iv_user_profile = view.findViewById(R.id.iv_user_profile);
+
+        if (username.length() > 0 && profile.length() > 0) {
+            txt_user_name.setText(username);
+            Glide.with(EventFragment.this).load(ConfigurationAll.ImageURL + profile)
+                    .into(iv_user_profile);
+        }
+
         // event class
         addEventItem();
         recyclerViewEvent = view.findViewById(R.id.recycle_view_event);
         RecyclerView.LayoutManager layoutManagerEvent = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerViewEvent.setLayoutManager(layoutManagerEvent);
+
         return view;
     }
 

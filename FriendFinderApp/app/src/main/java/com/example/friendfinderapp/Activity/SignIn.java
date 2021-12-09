@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.friendfinderapp.API.APIRequestData;
 import com.example.friendfinderapp.API.RetroServer;
 import com.example.friendfinderapp.Constants.ConfigurationAll;
+import com.example.friendfinderapp.EventFragment;
 import com.example.friendfinderapp.Home;
 import com.example.friendfinderapp.HomeFragment;
 import com.example.friendfinderapp.Model.ResponseModel;
@@ -100,6 +101,9 @@ public class SignIn extends AppCompatActivity {
 
                 HomeFragment.username = fullname;
                 HomeFragment.profile = profile;
+                EventFragment.username = fullname;
+                EventFragment.profile = profile;
+
                 ConfigurationAll.user_id = id;
 
                 Intent intent = new Intent(getApplicationContext(), Home.class);
