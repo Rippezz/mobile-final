@@ -32,9 +32,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EventFragment extends Fragment implements EventAdapter.OnEventListener {
+public class EventFragment extends Fragment implements EventAdapter.OnEventListener, userEventAdapter.onUserEventListener {
 
-    private List<Event> events = new ArrayList<>();
+    private List<userEvent> events = new ArrayList<>();
     public static String username = "", profile = "";
 
     // recycler view init
@@ -57,7 +57,7 @@ public class EventFragment extends Fragment implements EventAdapter.OnEventListe
 
         // event class
         addEventItem();
-        recyclerViewEvent = view.findViewById(R.id.recycle_view_event);
+        recyclerViewEvent = view.findViewById(R.id.recycle_view_user_event);
         RecyclerView.LayoutManager layoutManagerEvent = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerViewEvent.setLayoutManager(layoutManagerEvent);
 
@@ -98,11 +98,11 @@ public class EventFragment extends Fragment implements EventAdapter.OnEventListe
                     String location = event_model.getLocation();
                     String category = event_model.getCategory();
 
-                    Event event = new Event(id, name_event, event_owner, contact_person, description, event_picture, event_start_date, event_end_date, price, location, category);
+                    userEvent event = new userEvent(id, name_event, event_owner, contact_person, description, event_picture, event_start_date, event_end_date, price, location, category);
                     events.add(event);
                 }
 
-                EventAdapter eventAdapter = new EventAdapter(events, EventFragment.this);
+                userEventAdapter eventAdapter = new userEventAdapter(events, EventFragment.this);
                 recyclerViewEvent.setAdapter(eventAdapter);
             }
 
@@ -112,5 +112,19 @@ public class EventFragment extends Fragment implements EventAdapter.OnEventListe
 
             }
         });
+    }
+
+    @Override
+    public void onUserEventClick(int position) {
+        Intent intent = new Intent(this.getContext(), DetailUserEvent.class);
+        // 11 item
+        intent.putExtra("event_name", events.get(position).getName_event());
+        intent.putExtra("event_picture", events.get(position).getEvent_picture());
+        intent.putExtra("start_date", events.get(position).getEvent_start_date());
+        intent.putExtra("event_owner", events.get(position).getEvent_owner());
+        intent.putExtra("contact_person", events.get(position).getContact_person());
+        intent.putExtra("description", events.get(position).getDescription());
+
+        startActivity(intent);
     }
 }

@@ -13,4 +13,5 @@
     <color name="background">#F6F9FF</color>
     <color name="white">#FFFFFF</color>
     <color name="lineStroke">#DDE5E9</color>
+    <color name="yellow">#FFC107</color>
 </resources>

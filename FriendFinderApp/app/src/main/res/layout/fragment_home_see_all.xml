@@ -56,7 +56,8 @@
                 android:inputType="text"
                 android:paddingStart="16dp"
                 android:textColor="@color/black"
-                android:textSize="14dp" />
+                android:textSize="14dp"
+                tools:ignore="TouchTargetSizeCheck" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="40dp"
