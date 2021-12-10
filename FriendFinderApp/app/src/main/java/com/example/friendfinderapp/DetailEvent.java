@@ -16,8 +16,7 @@ import com.example.friendfinderapp.Constants.ConfigurationAll;
 
 public class DetailEvent extends AppCompatActivity {
 
-    String event_name, event_picture, start_date, event_owner, contact_person, description;
-    String message = "Halo Bos";
+    private String event_name,event_picture,start_date,event_owner,contact_person,description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +31,7 @@ public class DetailEvent extends AppCompatActivity {
         TextView detail_contact_person = findViewById(R.id.detail_contact_person);
         TextView detail_owner_name = findViewById(R.id.detail_owner_name);
         TextView detail_description = findViewById(R.id.detail_description);
-        CardView contact_owner = findViewById(R.id.btn_contact_owner);
+        CardView btn_contact_owner = findViewById(R.id.btn_contact_owner);
 
         // get parsing data
         if (getIntent() != null) {
@@ -52,8 +51,17 @@ public class DetailEvent extends AppCompatActivity {
 
             Glide.with(this).load(ConfigurationAll.ImageURL + event_picture).into(detail_event_image);
 
-        }
-        ;
+        };
+
+        btn_contact_owner.setOnClickListener(v -> {
+            String phone_number = contact_person.replaceFirst("0", "+62");
+            String message = "Hey%20My%20name%20is%20" + HomeFragment.username + "%0ACan%20i%20join%20your%20event%0AEvent%20name%3A%20" + event_name + "%0A%0Aps%20%3A%29";
+            System.out.println(phone_number);
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone=" + phone_number +
+                    "&text=" + message));
+            startActivity(intent);
+        });
+
         btn_back_to_see_all.setOnClickListener(new View.OnClickListener() {
             @MainThread
             public void onBackPressed() {
@@ -65,16 +73,5 @@ public class DetailEvent extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
-        contact_owner.setOnClickListener(v -> {
-            String phone_number = contact_person.replaceFirst("0", "+62");
-            String message = "Hey%20My%20name%20is%20"+HomeFragment.username+"%0ACan%20i%20join%20your%20event%0AEvent%20name%3A%20"+ event_name +"%0A%0Aps%20%3A%29";
-            System.out.println(phone_number);
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone="+phone_number+
-                    "&text=" + message));
-            startActivity(intent);
-
-        });
     }
-
 }
