@@ -64,8 +64,6 @@ public class SignIn extends AppCompatActivity {
             login(prefEmail, prefPassword);
         }
 
-//        checkSessionLogin();
-
         TextView link_sign_up = findViewById(R.id.link_sign_up);
         link_sign_up.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), SignUp.class);
