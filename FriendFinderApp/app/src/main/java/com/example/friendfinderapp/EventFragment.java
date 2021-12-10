@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,6 +38,8 @@ public class EventFragment extends Fragment implements EventAdapter.OnEventListe
     private List<userEvent> events = new ArrayList<>();
     public static String username = "", profile = "";
 
+    CardView btn_add_new_event;
+
     // recycler view init
     private RecyclerView recyclerViewEvent;
 
@@ -54,6 +57,14 @@ public class EventFragment extends Fragment implements EventAdapter.OnEventListe
             Glide.with(EventFragment.this).load(ConfigurationAll.ImageURL + profile)
                     .into(iv_user_profile);
         }
+
+        btn_add_new_event = view.findViewById(R.id.btn_add_new_event);
+        btn_add_new_event.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(v.getContext(), EventForm.class));
+            }
+        });
 
         // event class
         addEventItem();
