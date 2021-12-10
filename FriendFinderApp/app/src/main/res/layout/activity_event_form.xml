@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="30dp"
+    android:layout_marginVertical="40dp"
+    android:scrollbars="none"
+    tools:context=".EventForm">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp">
+
+            <ImageView
+                android:id="@+id/btn_back_to_user_event"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_baseline_chevron_left_24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/poppinssemibold"
+                android:text="Event Form"
+                android:textColor="@color/black"
+                android:textSize="16dp" />
+        </RelativeLayout>
+
+        // event name
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinsregular"
+                android:text="Event Name"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
+
+            <EditText
+                android:id="@+id/et_event_name"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/custom_input"
+                android:fontFamily="@font/poppinsregular"
+                android:inputType="text"
+                android:paddingStart="16dp"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+        </LinearLayout>
+
+        // event owner
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinsregular"
+                android:text="Owner"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
+
+            <EditText
+                android:id="@+id/et_event_owner"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/custom_input"
+                android:fontFamily="@font/poppinsregular"
+                android:inputType="text"
+                android:paddingStart="16dp"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+        </LinearLayout>
+
+        // Contact Person
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinsregular"
+                android:text="Contact Person"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
+
+            <EditText
+                android:id="@+id/et_contact_person"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/custom_input"
+                android:fontFamily="@font/poppinsregular"
+                android:inputType="text"
+                android:paddingStart="16dp"
+                android:textColor="@color/black"
+                android:textSize="14dp"
+                tools:ignore="SpeakableTextPresentCheck" />
+        </LinearLayout>
+
+        // Description
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinsregular"
+                android:text="Description"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
+
+            <EditText
+                android:id="@+id/et_description"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/custom_input"
+                android:fontFamily="@font/poppinsregular"
+                android:inputType="text"
+                android:paddingStart="16dp"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+        </LinearLayout>
+
+        // Category
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinsregular"
+                android:text="Category"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
+
+            <Spinner
+                android:layout_marginTop="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:paddingTop="6dp"
+                android:id="@+id/cb_category"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

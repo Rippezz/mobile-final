@@ -40,7 +40,6 @@ import java.util.List;
  */
 public class HomeSeeAllFragment extends Fragment implements EventAdapter.OnEventListener {
 
-    private ArrayList<Category> categories;
     private List<Event> events = new ArrayList<>();
 
     // recycler view init
@@ -100,16 +99,6 @@ public class HomeSeeAllFragment extends Fragment implements EventAdapter.OnEvent
         });
 
         return view;
-    }
-
-    // add category item
-    private void addCategoryItem() {
-        categories = new ArrayList<>();
-        categories.add(new Category("Place", R.mipmap.place));
-        categories.add(new Category("Sport", R.mipmap.category));
-        categories.add(new Category("Education", R.mipmap.category1));
-        categories.add(new Category("Hangout", R.mipmap.category2));
-        categories.add(new Category("Vacation", R.mipmap.category3));
     }
 
     // add event item
