@@ -3,11 +3,7 @@ package com.example.friendfinderapp.Constants;
 public class ConfigurationAll {
 
     public static String user_id = "";
-<<<<<<< Updated upstream
-    static String ip = "10.212.151.247";
-=======
-    static String ip = "10.128.108.32";
->>>>>>> Stashed changes
+    static String ip = "10.128.108.209";
     public static final String baseUrl = "http://" + ip + "/friend-finder/public/";
 
     public static String ImageURL = "http://" + ip + "/friend-finder/public/img/";
