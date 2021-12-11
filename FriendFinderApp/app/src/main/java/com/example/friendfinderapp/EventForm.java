@@ -36,7 +36,7 @@ public class EventForm extends AppCompatActivity {
                     owner = edeventowner.getText().toString();
                     cp = edeventcp.getText().toString();
                     desc = edeventdesc.getText().toString();
-                    spinner = spinner.get
+                    spinner = spinner.getItemAtPosition();
                 });
 
         ImageView btn_back_to_user_event = findViewById(R.id.btn_back_to_user_event);
