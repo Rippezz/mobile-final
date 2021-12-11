@@ -2,6 +2,7 @@ package com.example.friendfinderapp.API;
 
 import com.example.friendfinderapp.Model.Event_Model;
 import com.example.friendfinderapp.Model.ResponseModel;
+import com.example.friendfinderapp.userEvent;
 
 import java.util.List;
 
@@ -41,6 +42,6 @@ public interface APIRequestData {
     Call<List<Event_Model>> resAllUserEvent(@Path("id") String id);
 
     @GET("API/getEventByKeyword/{keyword}")
-    Call<List<Event_Model>> resEventByKeyword(@Path("keyword") String keyword);
+    Call<List<userEvent>> resEventByKeyword(@Path("keyword") String keyword);
 
 }

@@ -8,26 +8,19 @@
         <entry key="..\:/APK_Program/AS/Mobile/FriendFinderApp/app/src/main/res/layout/activity_sign_up.xml" value="0.17777777777777778" />
         <entry key="..\:/APK_Program/AS/Mobile/FriendFinderApp/app/src/main/res/layout/fragment_home.xml" value="0.15" />
         <entry key="..\:/APK_Program/AS/Mobile/FriendFinderApp/app/src/main/res/xml/network_security_config.xml" value="0.17777777777777778" />
+        <entry key="..\:/mobile-final-494a46d54af8dd6a2dbe1be6de7b7f4c861ec177/FriendFinderApp/app/src/main/res/layout/activity_detail_event.xml" value="0.184375" />
+        <entry key="..\:/mobile-final-494a46d54af8dd6a2dbe1be6de7b7f4c861ec177/FriendFinderApp/app/src/main/res/layout/activity_detail_place.xml" value="0.184375" />
         <entry key="..\:/mobile-final/FriendFinderApp/app/src/main/res/drawable/ic_baseline_chevron_right_24.xml" value="0.1" />
-        <entry key="..\:/mobile-final/FriendFinderApp/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.10648148148148148" />
         <entry key="..\:/mobile-final/FriendFinderApp/app/src/main/res/layout/activity_detail_event.xml" value="0.184375" />
         <entry key="..\:/mobile-final/FriendFinderApp/app/src/main/res/layout/activity_detail_user_event.xml" value="0.27007299270072993" />
-        <entry key="..\:/mobile-final/FriendFinderApp/app/src/main/res/layout/activity_event_form.xml" value="0.30618892508143325" />
-        <entry key="..\:/mobile-final/FriendFinderApp/app/src/main/res/layout/category_dropdown_item.xml" value="0.184375" />
-        <entry key="..\:/mobile-final/FriendFinderApp/app/src/main/res/layout/category_item.xml" value="0.22" />
         <entry key="..\:/mobile-final/FriendFinderApp/app/src/main/res/layout/event_item.xml" value="0.1407035175879397" />
         <entry key="..\:/mobile-final/FriendFinderApp/app/src/main/res/layout/fragment_event.xml" value="0.1" />
         <entry key="..\:/mobile-final/FriendFinderApp/app/src/main/res/layout/fragment_home.xml" value="0.13333333333333333" />
-        <entry key="..\:/mobile-final/FriendFinderApp/app/src/main/res/layout/fragment_home_see_all.xml" value="0.16666666666666666" />
+        <entry key="..\:/mobile-final/FriendFinderApp/app/src/main/res/layout/fragment_home_see_all.xml" value="0.1" />
         <entry key="..\:/mobile-final/FriendFinderApp/app/src/main/res/layout/fragment_see_all_event.xml" value="0.184375" />
         <entry key="..\:/mobile-final/FriendFinderApp/app/src/main/res/layout/fragment_see_all_place.xml" value="0.184375" />
         <entry key="..\:/mobile-final/FriendFinderApp/app/src/main/res/layout/place_list_item.xml" value="0.22" />
         <entry key="..\:/mobile-final/FriendFinderApp/app/src/main/res/layout/user_event_item.xml" value="0.15555555555555556" />
-<<<<<<< Updated upstream
-        <entry key="app/src/main/res/layout/activity_detail_event.xml" value="0.17401215805471124" />
-        <entry key="app/src/main/res/layout/activity_detail_place.xml" value="0.20878623188405798" />
-=======
->>>>>>> Stashed changes
       </map>
     </option>
   </component>

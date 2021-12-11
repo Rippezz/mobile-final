@@ -15,12 +15,19 @@ import com.example.friendfinderapp.Constants.ConfigurationAll;
 
 public class DetailPlace extends AppCompatActivity {
 
+    String place_name,
+            place_picture,
+            description,
+            place_owner,
+            place_price,
+            place_time_schedule,
+            location,
+            contact_person;
     // init
     private TextView txt_place_name, txt_description, txt_place_owner, txt_place_price,
             txt_place_open, txt_location, txt_contact_person;
-    private CardView contact_owner;
     private ImageView iv_place_picture, back_to_see_all;
-    private String place_name, place_picture, description, place_owner, place_price, place_time_schedule, location, contact_person;
+    private CardView btn_contact_owner_place;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +43,7 @@ public class DetailPlace extends AppCompatActivity {
         txt_contact_person = findViewById(R.id.detail_place_contact_person);
         iv_place_picture = findViewById(R.id.detail_place_image);
         back_to_see_all = findViewById(R.id.btn_back_to_see_all);
-        contact_owner = findViewById(R.id.btn_contact_owner);
+        btn_contact_owner_place = findViewById(R.id.btn_contact_owner_place);
 
         back_to_see_all.setOnClickListener(new View.OnClickListener() {
             public void onBackPressed() {
@@ -70,17 +77,16 @@ public class DetailPlace extends AppCompatActivity {
             Glide.with(getApplicationContext()).load(ConfigurationAll.ImageURL + place_picture).into(iv_place_picture);
         }
 
-        contact_owner.setOnClickListener(new View.OnClickListener() {
+        btn_contact_owner_place.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String phone_number = contact_person.replaceFirst("0", "+62");
-                String message = "Hey%20My%20name%20is%20"+HomeFragment.username+"%0ACan%20i%20book%20this%20pleace%0APlace%20name%3A%20"+ place_name +"%0A%0Aps%20%3A%29";
+                String message = "Hey%20My%20name%20is%20" + HomeFragment.username + "%0ACan%20i%20get%20in%20your%20place%0APlace%20name%3A%20" + place_name + "%0A%0Aps%20%3A%29";
                 System.out.println(phone_number);
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone="+phone_number+
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone=" + phone_number +
                         "&text=" + message));
                 startActivity(intent);
             }
         });
-
     }
 }
